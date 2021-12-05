@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TeamTwo.WebShop.OrderService.Domain.Mappers;
 using TeamTwo.WebShop.OrderService.Domain.Models;
-using TeamTwo.WebShop.OrderService.Infrastructure.Repository;
+using TeamTwo.WebShop.OrderService.Domain.Repository;
 
 namespace TeamTwo.WebShop.OrderService.Domain.Services
 {

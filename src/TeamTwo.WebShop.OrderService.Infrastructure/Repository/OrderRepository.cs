@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeamTwo.WebShop.OrderService.Domain.Models;
+using TeamTwo.WebShop.OrderService.Domain.Repository;
 
 namespace TeamTwo.WebShop.OrderService.Infrastructure.Repository
 {
@@ -19,7 +20,7 @@ namespace TeamTwo.WebShop.OrderService.Infrastructure.Repository
 
 		public async Task<Order> GetOrderAsync(int id)
 		{
-			return await Task.FromResult(_orders.FirstOrDefault(o => o.Id == id));
+			return await Task.FromResult(_orders.FirstOrDefault<Order>(o => o.Id == id));
 		}
 		public async Task<Order> CreateOrderAsync(Order order)
 		{

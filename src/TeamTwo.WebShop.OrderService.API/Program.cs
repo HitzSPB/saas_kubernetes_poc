@@ -1,5 +1,6 @@
 using TeamTwo.WebShop.OrderService.Domain.Mappers;
 using TeamTwo.WebShop.OrderService.Domain.Services;
+using TeamTwo.WebShop.OrderService.Domain.Repository;
 using TeamTwo.WebShop.OrderService.Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);

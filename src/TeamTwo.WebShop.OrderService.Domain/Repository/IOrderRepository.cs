@@ -1,6 +1,6 @@
 ﻿using TeamTwo.WebShop.OrderService.Domain.Models;
 
-namespace TeamTwo.WebShop.OrderService.Infrastructure.Repository
+namespace TeamTwo.WebShop.OrderService.Domain.Repository
 {
 	public interface IOrderRepository
 	{
