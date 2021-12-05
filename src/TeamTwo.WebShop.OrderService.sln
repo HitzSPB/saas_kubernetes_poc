@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderServic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BA0EFFB2-795D-4439-9BFA-41FAFDA0222B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderService.Test", "..\TeamTwo.WebShop.OrderService.Test\TeamTwo.WebShop.OrderService.Test.csproj", "{379B5DCF-564B-47CB-B424-2EFB655BCE1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderService.Test", "TeamTwo.WebShop.OrderService.Test\TeamTwo.WebShop.OrderService.Test.csproj", "{379B5DCF-564B-47CB-B424-2EFB655BCE1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderService.IntegrationTest", "..\TeamTwo.WebShop.OrderService.IntegrationTest\TeamTwo.WebShop.OrderService.IntegrationTest.csproj", "{A2159F31-9CA6-45E0-9D95-F78FD81E4576}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderService.IntegrationTest", "TeamTwo.WebShop.OrderService.IntegrationTest\TeamTwo.WebShop.OrderService.IntegrationTest.csproj", "{A2159F31-9CA6-45E0-9D95-F78FD81E4576}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderService.Domain", "..\TeamTwo.WebShop.OrderService.Domain\TeamTwo.WebShop.OrderService.Domain.csproj", "{10446F7A-4A60-43E3-A8AA-21126E47771F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderService.Domain", "TeamTwo.WebShop.OrderService.Domain\TeamTwo.WebShop.OrderService.Domain.csproj", "{10446F7A-4A60-43E3-A8AA-21126E47771F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderService.Infrastructure", "..\TeamTwo.WebShop.OrderService.Infrastructure\TeamTwo.WebShop.OrderService.Infrastructure.csproj", "{A77D63A3-C9C9-41C2-8700-44A6272ACE97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.OrderService.Infrastructure", "TeamTwo.WebShop.OrderService.Infrastructure\TeamTwo.WebShop.OrderService.Infrastructure.csproj", "{A77D63A3-C9C9-41C2-8700-44A6272ACE97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
