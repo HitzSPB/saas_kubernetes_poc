@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        dotnet-version: ['3.0', '5.x.x', '6.0.x' ]
+        dotnet-version: ['6.0.x']
     steps:
       - name: Set up JDK 11
         uses: actions/setup-java@v1
@@ -49,7 +49,5 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"HitzSPB_saas_kubernetes_poc" /o:"sonarcloud-hitzspb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet restore
-          dotnet build --configuration Release --no-restore
-          dotnet test --no-restore --verbosity normal
+          dotnet build ./udv/TeamTwo.WebShop.OrderService --configuration Release
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
