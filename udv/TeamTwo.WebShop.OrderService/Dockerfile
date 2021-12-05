@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["TeamTwo.WebShop.OrderService.csproj", "."]
-RUN dotnet restore "./TeamTwo.WebShop.OrderService.csproj"
+COPY ["TeamTwo.WebShop.OrderService.API.csproj", "."]
+RUN dotnet restore "./TeamTwo.WebShop.OrderService.API.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "TeamTwo.WebShop.OrderService.csproj" -c Release -o /app/build
+RUN dotnet build "TeamTwo.WebShop.OrderService.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "TeamTwo.WebShop.OrderService.csproj" -c Release -o /app/publish
+RUN dotnet publish "TeamTwo.WebShop.OrderService.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TeamTwo.WebShop.OrderService.dll"]
+ENTRYPOINT ["dotnet", "TeamTwo.WebShop.OrderService.API.dll"]

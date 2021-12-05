@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace TeamTwo.WebShop.OrderService.Controllers
+namespace TeamTwo.WebShop.OrderService.API.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
