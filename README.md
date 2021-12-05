@@ -4,6 +4,9 @@ This repository contains a POC where I attempt to learn how to create a SaaS pla
 ## Before use
 You can use my code freely as long as you credit me correctly where you use it. If you wish to take the source privately, please message me. I will allow it; however, I am curious how you will use the source code... I am not expecting payment or anything, just the simple respect of getting informed.
 
+## Contributions
+You are welcome to create pull requests to change the code base into something better. However, they will most likely not be looked at until I am done with the beginning code phases.
+
 ## Folder structure
 src:: The folder will contain all frontend and backend code
 deployment:: Will contain all deployment files that belong to kubernetes and similar products
@@ -16,6 +19,11 @@ Coming soon
 ## Phases
 ### phase 1 (Current active development branch)
 Order service with creating and read functionality (no Database)
+docker compose for quick and local testing
 Kubernetes deployment scripts
 API test (Postman)
 Performance test (No tool decided yet)
+
+## Tools setup for the repository 
+### Sonarqube cloud
+There is a SonarQube cloud subscription targeting the public GitHub repository constantly to scan every change made to correct any mistakes or critical errors introduced during development. It also helps ensure any common security risks are found early.
