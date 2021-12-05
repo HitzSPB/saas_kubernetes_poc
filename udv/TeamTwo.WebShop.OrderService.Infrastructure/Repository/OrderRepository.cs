@@ -12,16 +12,16 @@ namespace TeamTwo.WebShop.OrderService.Infrastructure.Repository
 		private readonly List<Order> _orders = new List<Order>();
 
 
-		public async Task<IEnumerable<Order>> GetAll()
+		public async Task<IEnumerable<Order>> GetAllAsync()
 		{
 			return await Task.FromResult(_orders);
 		}
 
-		public async Task<Order> GetOrderaAsync(int id)
+		public async Task<Order> GetOrderAsync(int id)
 		{
 			return await Task.FromResult(_orders.FirstOrDefault(o => o.Id == id));
 		}
-		public async Task<Order> CreateOrder(Order order)
+		public async Task<Order> CreateOrderAsync(Order order)
 		{
 			_orders.Add(order);
 			return await Task.FromResult(order);

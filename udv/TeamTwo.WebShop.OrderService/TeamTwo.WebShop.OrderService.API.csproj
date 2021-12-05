@@ -14,4 +14,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TeamTwo.WebShop.OrderService.Domain\TeamTwo.WebShop.OrderService.Domain.csproj" />
+    <ProjectReference Include="..\TeamTwo.WebShop.OrderService.Infrastructure\TeamTwo.WebShop.OrderService.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

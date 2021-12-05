@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using TeamTwo.WebShop.OrderService.Domain.Models;
+using TeamTwo.WebShop.OrderService.Domain.Services;
 
 namespace TeamTwo.WebShop.OrderService.API.Controllers
 {
@@ -7,40 +9,42 @@ namespace TeamTwo.WebShop.OrderService.API.Controllers
 	public class OrderController : ControllerBase
 	{
 		private readonly ILogger<OrderController> _logger;
+		private readonly IOrderService _orderService;
 
-		public OrderController(ILogger<OrderController> logger)
+		public OrderController(ILogger<OrderController> logger, IOrderService orderService)
 		{
 			_logger = logger;
+			_orderService = orderService;
 		}
 
 		[HttpGet(Name = "GetAllOrders")]
-		public string Get()
+		public async Task<IEnumerable<OrderDto>> Get()
 		{
-			return "test all";
+			return await _orderService.GetAllOrdersAsync();
 		}
 
 		[HttpGet(template: "{id}", Name = "GetSingleOrder")]
-		public string Get(int id)
+		public async Task<OrderDto> Get(int id)
 		{
-			return "test by id";
+			return await _orderService.GetOrderByIdAsync(id);
 		}
 
-		[HttpPost(template: "{content}", Name = "PostOrder")]
-		public string Post(string content)
+		[HttpPost(Name = "PostOrder")]
+		public async Task<OrderDto> Post([FromBody] OrderDto orderDto)
 		{
-			return "Post order";
+			return await _orderService.CreateOrderAsync(orderDto);
 		}
 
 		[HttpPatch(template: "{id}", Name = "UpdateOrder")]
-		public string Patch(int id)
+		public async Task<OrderDto> Patch(int id, [FromBody] OrderDto orderDto)
 		{
-			return $"Patch order {id}";
+			return await _orderService.UpdateOrderAsync(id, orderDto);
 		}
 
 		[HttpDelete(template: "{id}", Name = "DeleteOrder")]
-		public string Delete(int id)
+		public async Task Delete(int id)
 		{
-			return "Deleted item";
+			await _orderService.DeleteOrderAsync(id);
 		}
 	}
 }
