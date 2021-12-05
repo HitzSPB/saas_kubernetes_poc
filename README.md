@@ -33,3 +33,7 @@ There is a SonarQube cloud subscription targeting the public GitHub repository c
 - Frontend yet to be decided 
 - Docker as the container service selected
 - Kubernetes for orchestration
+
+## Projects
+### TeamTwo.WebShop.OrderService
+This project contains the order part of this POC. It is coded as a complete web API with the create read functionality.
