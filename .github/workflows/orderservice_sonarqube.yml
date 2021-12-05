@@ -55,4 +55,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"HitzSPB_saas_kubernetes_poc" /o:"sonarcloud-hitzspb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build ./src/TeamTwo.WebShop.OrderService.sln --configuration Release
+          dotnet test ./src/TeamTwo.WebShop.OrderService.sln --no-restore --verbosity normal
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
