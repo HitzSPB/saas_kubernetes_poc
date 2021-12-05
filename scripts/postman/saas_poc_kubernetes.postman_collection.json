@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "53f7c474-b520-4217-a9ea-1f0033a6e0b4",
+		"name": "saas_poc_kubernetes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OrderService",
+			"item": [
+				{
+					"name": "Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "OrderById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/order/0",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"string\",\r\n  \"productItems\": [\r\n    {\r\n      \"id\": 0,\r\n      \"productId\": 0,\r\n      \"name\": \"string\",\r\n      \"price\": 0\r\n    }\r\n  ],\r\n  \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/order",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"101212\",\r\n    \"productItems\": [\r\n        {\r\n            \"id\": 0,\r\n            \"productId\": 0,\r\n            \"name\": \"bag\",\r\n            \"price\": 0\r\n        }\r\n    ],\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/order/0",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/order/0",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
