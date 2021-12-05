@@ -1,4 +1,4 @@
-name: Build
+name: quality_control_build_order_service_sq
 on:
   push:
     branches:

@@ -1,4 +1,4 @@
-name: Build
+name: dotnet_run_test_order_service
 on:
   push:
     branches:
