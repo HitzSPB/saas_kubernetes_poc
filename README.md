@@ -27,3 +27,9 @@ Performance test (No tool decided yet)
 ## Tools setup for the repository 
 ### Sonarqube cloud
 There is a SonarQube cloud subscription targeting the public GitHub repository constantly to scan every change made to correct any mistakes or critical errors introduced during development. It also helps ensure any common security risks are found early.
+
+## Technology used
+- DotNet 6/C# for any backend technology
+- Frontend yet to be decided 
+- Docker as the container service selected
+- Kubernetes for orchestration
