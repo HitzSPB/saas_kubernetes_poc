@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+  teamtwo.webshop.orderservice.api:
+    image: ${DOCKER_REGISTRY-}teamtwowebshoporderserviceapi
+    build:
+      context: .
+      dockerfile: TeamTwo.WebShop.OrderService.API/Dockerfile

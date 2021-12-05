@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamTwo.WebShop.OrderServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamTwo.WebShop.OrderService.API", "TeamTwo.WebShop.OrderService.API\TeamTwo.WebShop.OrderService.API.csproj", "{A5703ECA-3E5D-403F-9764-3466F6B0D45A}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{928B33FD-C5AD-422C-BC4B-2E3D30E9DCEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{A5703ECA-3E5D-403F-9764-3466F6B0D45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5703ECA-3E5D-403F-9764-3466F6B0D45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5703ECA-3E5D-403F-9764-3466F6B0D45A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{928B33FD-C5AD-422C-BC4B-2E3D30E9DCEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{928B33FD-C5AD-422C-BC4B-2E3D30E9DCEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{928B33FD-C5AD-422C-BC4B-2E3D30E9DCEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{928B33FD-C5AD-422C-BC4B-2E3D30E9DCEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
