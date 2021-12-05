@@ -14,7 +14,12 @@ build:: Will contain all content that has something to do with CI/CD
 scripts:: will contain all scripts that the user or the build system can run.
 
 ## How to debug/run the application
-Coming soon
+All container actions requires your docker environment to run as linux
+
+You have 3 options to run/debug
+- Option one: Run the dockerfile in the src/TeamTwo.WebShop.OrderService.API either by opening the solution and f5 debug with docker, or you can use the command docker build command on the docker file with a parameter tag and docker run it afterward.
+- option two: Either run the docker-compose file in the src folder. You can run it by using the command docker-compose run or by f5 debugging the compose option in the solution file
+- option three: Open the solution and run it through the IIS Express host
 
 ## Phases
 ### phase 1 (Current active development branch)
