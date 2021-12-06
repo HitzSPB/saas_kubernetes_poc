@@ -1,4 +1,4 @@
-# POC for a attempt on creating a SaaS platform that uses kubernetes/AKS
+# POC for an attempt on creating a SaaS platform that uses kubernetes/AKS
 This repository contains a POC where I attempt to learn how to create a SaaS platform for the company that I am working in. The code is open source as I am using my spare time to make it and not actual company hours. Until the POC is done, it will be separated into different branches depending on the content's phase. Each phase will be a branch of the previous stage.
 
 ## Before use
