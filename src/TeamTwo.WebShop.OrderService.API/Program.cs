@@ -12,8 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IOrderMapper, OrderMapper>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEfMapper, EfMapper>();
-builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
-builder.Services.AddDbContext<OrderContext>( options => options.UseSqlServer(""));
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddDbContext<OrderContext>( options => 
+													options.UseSqlServer("Server=DESKTOP-2F5JO29;Database=orderservice;Trusted_Connection=True;", x => x.MigrationsAssembly("TeamTwo.WebShop.OrderService.Infrastructure")));
 
 
 builder.Services.AddControllers();

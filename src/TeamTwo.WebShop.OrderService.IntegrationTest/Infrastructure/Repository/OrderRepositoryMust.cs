@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TeamTwo.WebShop.OrderService.Domain.Models;
 using TeamTwo.WebShop.OrderService.Domain.Repository;
+using TeamTwo.WebShop.OrderService.Infrastructure.Context;
+using TeamTwo.WebShop.OrderService.Infrastructure.Mappers;
 using TeamTwo.WebShop.OrderService.Infrastructure.Repository;
 using Xunit;
 namespace TeamTwo.WebShop.OrderService.IntegrationTest.Infrastructure.Repository
@@ -14,7 +16,9 @@ namespace TeamTwo.WebShop.OrderService.IntegrationTest.Infrastructure.Repository
 		private readonly IOrderRepository sut;
 		public OrderRepositoryMust()
 		{
-			sut = new OrderRepository();
+			var context = new OrderContext(new Microsoft.EntityFrameworkCore.DbContextOptions<OrderContext>());
+			var efMapper = new EfMapper();
+			sut = new OrderRepository(context, efMapper);
 		}
 
 		[Fact]

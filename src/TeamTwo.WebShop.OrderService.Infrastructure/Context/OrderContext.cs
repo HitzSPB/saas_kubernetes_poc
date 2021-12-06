@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,15 @@ namespace TeamTwo.WebShop.OrderService.Infrastructure.Context
 	{
 		public OrderContext(DbContextOptions<OrderContext> options) : base(options)
 		{
-
 		}
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=SchoolDB;Trusted_Connection=True;");
+			foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+			{
+				// Use the entity name instead of the Context.DbSet<T> name
+				// refs https://docs.microsoft.com/en-us/ef/core/modeling/relational/tables#conventions
+				modelBuilder.Entity(entityType.ClrType).ToTable(entityType.ClrType.Name);
+			}
 		}
 		public DbSet<OrderEf> Orders { get; set; }
 	}

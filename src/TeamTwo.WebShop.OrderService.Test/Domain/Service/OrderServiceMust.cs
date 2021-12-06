@@ -7,6 +7,8 @@ using TeamTwo.WebShop.OrderService.Domain.Mappers;
 using TeamTwo.WebShop.OrderService.Domain.Models;
 using TeamTwo.WebShop.OrderService.Domain.Repository;
 using TeamTwo.WebShop.OrderService.Domain.Services;
+using TeamTwo.WebShop.OrderService.Infrastructure.Context;
+using TeamTwo.WebShop.OrderService.Infrastructure.Mappers;
 using TeamTwo.WebShop.OrderService.Infrastructure.Repository;
 using Xunit;
 
@@ -17,8 +19,10 @@ namespace TeamTwo.WebShop.OrderService.Test.Domain.Service
 		private readonly IOrderService _sut;
 		public OrderServiceMust()
 		{
+			var context = new OrderContext(new Microsoft.EntityFrameworkCore.DbContextOptions<OrderContext>());
+			var efMapper = new EfMapper();
 			IOrderMapper orderMapper = new OrderMapper();
-			IOrderRepository orderRepository = new OrderRepository();
+			IOrderRepository orderRepository = new OrderRepository(context, efMapper);
 			_sut = new OrderService.Domain.Services.OrderService(orderRepository, orderMapper);
 		}
 
