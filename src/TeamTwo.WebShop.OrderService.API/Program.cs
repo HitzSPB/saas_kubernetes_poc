@@ -2,13 +2,18 @@ using TeamTwo.WebShop.OrderService.Domain.Mappers;
 using TeamTwo.WebShop.OrderService.Domain.Services;
 using TeamTwo.WebShop.OrderService.Domain.Repository;
 using TeamTwo.WebShop.OrderService.Infrastructure.Repository;
+using TeamTwo.WebShop.OrderService.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+using TeamTwo.WebShop.OrderService.Infrastructure.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IOrderMapper, OrderMapper>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IEfMapper, EfMapper>();
 builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
+builder.Services.AddDbContext<OrderContext>( options => options.UseSqlServer(""));
 
 
 builder.Services.AddControllers();

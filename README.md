@@ -22,12 +22,17 @@ You have 3 options to run/debug
 - option three: Open the solution and run it through the IIS Express host
 
 ## Phases
-### phase 1 (Current active development branch)
+### phase 1
 Order service with creating and read functionality (no Database)
 docker compose for quick and local testing
 Kubernetes deployment scripts
 API test (Postman)
 Performance test (No tool decided yet)
+
+### phase 2 (Current active development branch)
+Order service with creating and read functionality with database
+docker compose with database
+Kubernetes deployment for sql server
 
 ## Tools setup for the repository 
 ### Sonarqube cloud

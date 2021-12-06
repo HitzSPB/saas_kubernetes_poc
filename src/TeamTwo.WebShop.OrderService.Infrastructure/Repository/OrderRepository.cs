@@ -1,43 +1,60 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeamTwo.WebShop.OrderService.Domain.Models;
 using TeamTwo.WebShop.OrderService.Domain.Repository;
+using TeamTwo.WebShop.OrderService.Infrastructure.Context;
+using TeamTwo.WebShop.OrderService.Infrastructure.Mappers;
+using TeamTwo.WebShop.OrderService.Infrastructure.Models;
 
 namespace TeamTwo.WebShop.OrderService.Infrastructure.Repository
 {
 	public class OrderRepository : IOrderRepository
 	{
-		private readonly List<Order> _orders = new List<Order>();
-
+		private readonly OrderContext _orderContext;
+		private readonly IEfMapper _efMapper;
+		public OrderRepository(OrderContext orderContext, IEfMapper efMapper)
+		{
+			_orderContext = orderContext;
+			_efMapper = efMapper;
+		}
+		//private readonly List<Order> _orders = new List<Order>();
 
 		public async Task<IEnumerable<Order>> GetAllAsync()
 		{
-			return await Task.FromResult(_orders);
+			var list = new List<Order>();
+			foreach (var order in _orderContext.Orders)
+			{
+				list.Add(_efMapper.Map(order));
+			}
+			return await Task.FromResult(list);
 		}
 
 		public async Task<Order> GetOrderAsync(int id)
 		{
-			return await Task.FromResult(_orders.FirstOrDefault<Order>(o => o.Id == id));
+			return _efMapper.Map(await _orderContext.Orders.FirstOrDefaultAsync(x => x.Id == id));
 		}
 		public async Task<Order> CreateOrderAsync(Order order)
 		{
-			_orders.Add(order);
-			return await Task.FromResult(order);
+			var storedObject = await _orderContext.Orders.AddAsync(_efMapper.Create(order));
+			await _orderContext.SaveChangesAsync();
+			return _efMapper.Map(storedObject.Entity);
 		}
 
 		public async Task<Order> UpdateOrder(int id, Order order)
 		{
-			var oldOrder = _orders.FirstOrDefault(o => o.Id == id);
-			oldOrder = order;
+			var orderEf = await _orderContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
+			orderEf = _efMapper.Create(order);
+			await _orderContext.SaveChangesAsync();
 			return await Task.FromResult(order);
 		}
 
 		public async Task DeleteOrderAsync(int id)
 		{
-			await Task.FromResult(_orders.Remove(_orders.FirstOrDefault(o => o.Id == id)));
+			await Task.FromResult(_orderContext.Orders.Remove(await _orderContext.Orders.FirstOrDefaultAsync(x => x.Id == id)));
 		}
 	}
 }
