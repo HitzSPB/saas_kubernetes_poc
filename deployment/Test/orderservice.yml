@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: orderservice-poc-service
+  name: orderservice-poc
   labels:
-    app: mini-web-shop-poc
+    app: orderservice-poc
 spec:
   type: LoadBalancer
   ports:
@@ -16,18 +16,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: orderservice-poc-deployment
+  name: orderservice-poc
   labels:
-    app: mini-web-shop-poc
+    app: orderservice-poc
 spec:
   replicas: 10
   selector:
     matchLabels:
-      app: mini-web-shop-poc
+      app: orderservice-poc
   template:
     metadata:
       labels:
-        app: mini-web-shop-poc
+        app: orderservice-poc
     spec:
       containers:
       - name: orderservice
@@ -40,4 +40,5 @@ spec:
             memory: "300Mi"
             cpu: "200m"
         ports:
-           - containerPort: 443
+           - containerPort: 80
+           
