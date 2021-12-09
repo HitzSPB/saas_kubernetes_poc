@@ -14,7 +14,12 @@ builder.Services.AddScoped<IOrderMapper, OrderMapper>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEfMapper, EfMapper>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-builder.Services.AddDbContext<OrderContext>( options => options.UseSqlServer(configuration.GetConnectionString("Db"), x => x.MigrationsAssembly("TeamTwo.WebShop.OrderService.Infrastructure")));
+var server = configuration.GetValue("Server", "localhost");
+var port = configuration.GetValue("Port", "1433");
+var database = configuration.GetValue("db","orderservice");
+var user = configuration.GetValue("User", "sa");
+var password = configuration.GetValue("Password", "SuperSecretPasswordNoOneWilKnow");
+builder.Services.AddDbContext<OrderContext>( options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID ={user};password={password}", x => x.MigrationsAssembly("TeamTwo.WebShop.OrderService.Infrastructure")));
 
 
 builder.Services.AddControllers();
@@ -32,7 +37,9 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

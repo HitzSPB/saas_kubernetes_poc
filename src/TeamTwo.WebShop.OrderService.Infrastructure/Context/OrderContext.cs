@@ -14,6 +14,7 @@ namespace TeamTwo.WebShop.OrderService.Infrastructure.Context
 	{
 		public OrderContext(DbContextOptions<OrderContext> options) : base(options)
 		{
+			Database.EnsureCreated();
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
