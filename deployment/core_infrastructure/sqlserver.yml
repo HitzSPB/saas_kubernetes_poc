@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: orderservice-poc
+---
+apiVersion: v1 
+kind: PersistentVolumeClaim 
+metadata: 
+  name: "pvc0001" 
+  namespace: orderservice-poc
+spec: 
+  accessModes: 
+    - "ReadWriteOnce" 
+  resources: 
+    requests: 
+      storage: "5Gi"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: orderservice-poc
+  name: mssql-env
+stringData:
+  MSSQL_SA_PASSWORD: SpecialStr0ngP@ssW0rd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: orderservice-poc
+  name: sqlserver
+  labels:
+    app: sqlserver
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+  selector:
+    app: sqlserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqlserver
+  labels:
+    app: sqlserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sqlserver
+  template:
+    metadata:
+      labels:
+        app: sqlserver
+    spec:
+      containers:
+      - name: sqlserverdeveloper
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        resources:
+          requests:
+            memory: "300Mi"
+            cpu: "150m"
+          limits:
+            memory: "300Mi"
+            cpu: "200m"
+        ports:
+           - containerPort: 1433
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mssql-env
+              key: MSSQL_SA_PASSWORD
+    #   volumeMounts:
+    #   - name: mssqldb
+    #     mountPath: /var/opt/mssql
+    # volumes:
+    # - name: mssqldb
+    #   persistentVolumeClaim:
+    #     claimName: pvc0001

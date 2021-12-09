@@ -1,6 +1,12 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: orderservice-poc
+---
+apiVersion: v1
 kind: Service
 metadata:
+  namespace: orderservice-poc
   name: orderservice-poc
   labels:
     app: orderservice-poc
@@ -16,6 +22,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: orderservice-poc
   name: orderservice-poc
   labels:
     app: orderservice-poc
