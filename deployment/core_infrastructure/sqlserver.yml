@@ -3,17 +3,47 @@ kind: Namespace
 metadata:
   name: orderservice-poc
 ---
-apiVersion: v1 
-kind: PersistentVolumeClaim 
-metadata: 
-  name: "pvc0001" 
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
   namespace: orderservice-poc
-spec: 
-  accessModes: 
-    - "ReadWriteOnce" 
-  resources: 
-    requests: 
-      storage: "5Gi"
+  name: "orderpoc-provisioner"
+provisioner: "kubernetes.io/no-provisioner"
+mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=999
+  - gid=999
+  - mfsymlinks
+  - cache=strict
+  - actimeo=30
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mssql-pv
+  namespace: orderservice-poc
+spec:
+  storageClassName: orderpoc-provisioner
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/aks-hci"           
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: orderservice-poc
+  name: mssql-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: orderpoc-provisioner
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Secret
@@ -21,53 +51,38 @@ metadata:
   namespace: orderservice-poc
   name: mssql-env
 stringData:
-  MSSQL_SA_PASSWORD: SpecialStr0ngP@ssW0rd
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: orderservice-poc
-  name: sqlserver
-  labels:
-    app: sqlserver
-spec:
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 1433
-      targetPort: 1433
-  selector:
-    app: sqlserver
+  MSSQL_SA_PASSWORD: "ThisIsMyTopSecretPa$$Wrod"
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sqlserver
-  labels:
-    app: sqlserver
+  namespace: orderservice-poc
+  name: mssql-deployment
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: sqlserver
+     matchLabels:
+       app: mssql
   template:
     metadata:
       labels:
-        app: sqlserver
+        app: mssql
     spec:
+      terminationGracePeriodSeconds: 30
+      hostname: mssqlinst
+      securityContext:
+        fsGroup: 10001
       containers:
-      - name: sqlserverdeveloper
+      - name: mssql
         image: mcr.microsoft.com/mssql/server:2019-latest
-        resources:
-          requests:
-            memory: "300Mi"
-            cpu: "150m"
-          limits:
-            memory: "300Mi"
-            cpu: "200m"
+        volumeMounts:
+          - name: mssql-storage
+            mountPath: /var/opt/mssql 
         ports:
-           - containerPort: 1433
+        - containerPort: 1433
         env:
+        - name: MSSQL_PID
+          value: "Developer"
         - name: ACCEPT_EULA
           value: "Y"
         - name: SA_PASSWORD
@@ -75,10 +90,21 @@ spec:
             secretKeyRef:
               name: mssql-env
               key: MSSQL_SA_PASSWORD
-    #   volumeMounts:
-    #   - name: mssqldb
-    #     mountPath: /var/opt/mssql
-    # volumes:
-    # - name: mssqldb
-    #   persistentVolumeClaim:
-    #     claimName: pvc0001
+      volumes:
+        - name: mssql-storage
+          persistentVolumeClaim:
+            claimName: mssql-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: orderservice-poc
+  name: mssql-deployment
+spec:
+  selector:
+    app: mssql
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+  type: LoadBalancer
