@@ -1,0 +1,28 @@
+name: dotnet_run_test_order_service
+on:
+  push:
+    branches:
+      - master
+      - '*'
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['6.0.x']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore ./src/TeamTwo.WebShop.OrderService.sln
+      - name: Build
+        run: dotnet build ./src/TeamTwo.WebShop.OrderService.sln --configuration Release --no-restore
+      - name: Test
+        run: dotnet test ./src/TeamTwo.WebShop.OrderService.sln --no-restore --verbosity normal

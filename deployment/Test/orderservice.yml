@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: orderservice-poc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: orderservice-poc
+  name: orderservice-poc
+  labels:
+    app: orderservice-poc
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 80
+  selector:
+    app: orderservice-poc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: orderservice-poc
+  name: orderservice-poc
+  labels:
+    app: orderservice-poc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: orderservice-poc
+  template:
+    metadata:
+      labels:
+        app: orderservice-poc
+    spec:
+      containers:
+      - name: orderservice
+        image: hitzspb/orderservice:latest
+        resources:
+          requests:
+            memory: "1200Mi"
+            cpu: "200m"
+          limits:
+            memory: "1200Mi"
+            cpu: "200m"
+        ports:
+           - containerPort: 80
+           
