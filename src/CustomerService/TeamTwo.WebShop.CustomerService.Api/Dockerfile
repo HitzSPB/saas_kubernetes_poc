@@ -8,6 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["TeamTwo.WebShop.CustomerService.Api/TeamTwo.WebShop.CustomerService.Api.csproj", "TeamTwo.WebShop.CustomerService.Api/"]
+COPY ["TeamTwo.WebShop.CustomerService.Infrastructure/TeamTwo.WebShop.CustomerService.Infrastructure.csproj", "TeamTwo.WebShop.CustomerService.Infrastructure/"]
+COPY ["TeamTwo.WebShop.CustomerService.Domain/TeamTwo.WebShop.CustomerService.Domain.csproj", "TeamTwo.WebShop.CustomerService.Domain/"]
 RUN dotnet restore "TeamTwo.WebShop.CustomerService.Api/TeamTwo.WebShop.CustomerService.Api.csproj"
 COPY . .
 WORKDIR "/src/TeamTwo.WebShop.CustomerService.Api"
