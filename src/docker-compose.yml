@@ -12,7 +12,7 @@ services:
     image: ${DOCKER_REGISTRY-}teamtwowebshoporderserviceapi
     build:
       context: .
-      dockerfile: TeamTwo.WebShop.OrderService.API/Dockerfile
+      dockerfile: OrderService/TeamTwo.WebShop.OrderService.API/Dockerfile
     environment:
       Server: SqlServer
       Port: 1433
