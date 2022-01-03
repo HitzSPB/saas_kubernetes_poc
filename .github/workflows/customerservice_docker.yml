@@ -1,4 +1,4 @@
-name: build_docker_container
+name: customerservice_docker
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./src
+          context: ./src/CustomerService
           file: ./src/CustomerService/TeamTwo.WebShop.CustomerService.Api/Dockerfile
           push: true
           tags: hitzspb/customerservice:latest
