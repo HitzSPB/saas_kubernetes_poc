@@ -14,7 +14,7 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 8001
+      port: 80
       targetPort: 80
   selector:
     app: orderservice-poc
@@ -27,7 +27,7 @@ metadata:
   labels:
     app: orderservice-poc
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: orderservice-poc
@@ -48,4 +48,20 @@ spec:
             cpu: "200m"
         ports:
            - containerPort: 80
-           
+             protocol: TCP
+        env:
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        - name: Server
+          value: "10.50.211.58"
+        - name: Port
+          value: "1433"
+        - name: db
+          value: "orderservice"
+        - name: User
+          value: "sa"
+        - name: Password
+          valueFrom:
+            secretKeyRef:
+              name: mssql-env
+              key: MSSQL_SA_PASSWORD
