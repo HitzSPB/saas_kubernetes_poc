@@ -8,6 +8,21 @@ services:
         ACCEPT_EULA: "Y"
     ports: 
       - "1433:1433"
+  teamtwo.webshop.customerservice.api:
+    image: ${DOCKER_REGISTRY-}teamtwowebshopcustomerserviceapi
+    build:
+      context: .
+      dockerfile: CustomerService/TeamTwo.WebShop.CustomerService.Api/Dockerfile
+    environment:
+      Server: SqlServer
+      Port: 1433
+      db: customerservice
+      User: sa
+      Password: "Your_password123"
+    ports: 
+      - "8051:80"
+    depends_on:
+      - SqlServer  
   teamtwo.webshop.orderservice.api:
     image: ${DOCKER_REGISTRY-}teamtwowebshoporderserviceapi
     build:
@@ -23,3 +38,4 @@ services:
       - "8050:80"
     depends_on:
       - SqlServer
+      - teamtwo.webshop.customerservice.api

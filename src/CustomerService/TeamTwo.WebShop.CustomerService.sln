@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.CustomerService.Api", "TeamTwo.WebShop.CustomerService.Api\TeamTwo.WebShop.CustomerService.Api.csproj", "{4362D5D5-0683-41EE-81FA-132D4F95EDAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamTwo.WebShop.CustomerService.Api", "TeamTwo.WebShop.CustomerService.Api\TeamTwo.WebShop.CustomerService.Api.csproj", "{4362D5D5-0683-41EE-81FA-132D4F95EDAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.CustomerService.Domain", "TeamTwo.WebShop.CustomerService.Domain\TeamTwo.WebShop.CustomerService.Domain.csproj", "{02F71BC8-EDB4-41F9-99F5-D9C0527BB7DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamTwo.WebShop.CustomerService.Domain", "TeamTwo.WebShop.CustomerService.Domain\TeamTwo.WebShop.CustomerService.Domain.csproj", "{02F71BC8-EDB4-41F9-99F5-D9C0527BB7DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTwo.WebShop.CustomerService.Infrastructure", "TeamTwo.WebShop.CustomerService.Infrastructure\TeamTwo.WebShop.CustomerService.Infrastructure.csproj", "{220047B1-394A-4686-9F78-F8117FE33CB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamTwo.WebShop.CustomerService.Infrastructure", "TeamTwo.WebShop.CustomerService.Infrastructure\TeamTwo.WebShop.CustomerService.Infrastructure.csproj", "{220047B1-394A-4686-9F78-F8117FE33CB5}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "..\docker-compose.dcproj", "{5CCC4EFA-8897-4D5E-A5F5-E243A029E284}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{220047B1-394A-4686-9F78-F8117FE33CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{220047B1-394A-4686-9F78-F8117FE33CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{220047B1-394A-4686-9F78-F8117FE33CB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CCC4EFA-8897-4D5E-A5F5-E243A029E284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CCC4EFA-8897-4D5E-A5F5-E243A029E284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CCC4EFA-8897-4D5E-A5F5-E243A029E284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CCC4EFA-8897-4D5E-A5F5-E243A029E284}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
