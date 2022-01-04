@@ -53,7 +53,7 @@ spec:
         - name: ASPNETCORE_URLS
           value: http://+:80
         - name: Server
-          value: "10.50.211.58"
+          value: "mssql-deployment.orderservice-poc.svc.cluster.local"
         - name: Port
           value: "1433"
         - name: db

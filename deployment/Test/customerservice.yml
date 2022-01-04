@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: orderservice-poc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: orderservice-poc
+  name: customerservice-poc
+  labels:
+    app: customerservice-poc
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: customerservice-poc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: orderservice-poc
+  name: customerservice-poc
+  labels:
+    app: customerservice-poc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customerservice-poc
+  template:
+    metadata:
+      labels:
+        app: customerservice-poc
+    spec:
+      containers:
+      - name: customerservice
+        image: hitzspb/customerservice:latest
+        resources:
+          requests:
+            memory: "1200Mi"
+            cpu: "200m"
+          limits:
+            memory: "1200Mi"
+            cpu: "200m"
+        ports:
+           - containerPort: 80
+             protocol: TCP
+        env:
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        - name: Server
+          value: "mssql-deployment.orderservice-poc.svc.cluster.local"
+        - name: Port
+          value: "1433"
+        - name: db
+          value: "customerservice"
+        - name: User
+          value: "sa"
+        - name: Password
+          valueFrom:
+            secretKeyRef:
+              name: mssql-env
+              key: MSSQL_SA_PASSWORD
