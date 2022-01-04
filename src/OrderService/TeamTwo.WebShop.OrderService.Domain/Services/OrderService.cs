@@ -51,6 +51,10 @@ namespace TeamTwo.WebShop.OrderService.Domain.Services
 
 		public async Task<OrderDto> UpdateOrderAsync(int id, OrderDto orderDto)
 		{
+			var customer = await _customerServiceCall.GetCustomerByIdAsync(orderDto.CustomerId);
+
+			if (string.IsNullOrWhiteSpace(customer.FirstName))
+				throw new ArgumentNullException("Customer doesn't exist");
 			Order order = await _orderRepository.UpdateOrder(id, _orderMapper.Create(orderDto));
 			return _orderMapper.Map(order);
 		}
