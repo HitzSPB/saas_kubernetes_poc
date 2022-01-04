@@ -50,6 +50,8 @@ spec:
            - containerPort: 80
              protocol: TCP
         env:
+        - name: CustomerServiceBasepath
+          value: "customerservice-poc.orderservice-poc.svc.cluster.local"
         - name: ASPNETCORE_URLS
           value: http://+:80
         - name: Server

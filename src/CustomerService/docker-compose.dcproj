@@ -3,10 +3,10 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>928b33fd-c5ad-422c-bc4b-2e3d30e9dcec</ProjectGuid>
+    <ProjectGuid>14462392-6e14-4a6c-b998-0ea1f56c031e</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>teamtwo.webshop.orderservice.api</DockerServiceName>
+    <DockerServiceName>teamtwo.webshop.customerservice.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

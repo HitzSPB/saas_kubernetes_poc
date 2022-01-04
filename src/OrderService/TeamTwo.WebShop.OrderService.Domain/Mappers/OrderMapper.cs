@@ -14,7 +14,7 @@ namespace TeamTwo.WebShop.OrderService.Domain.Mappers
 			return new Order()
 			{
 				Id = orderDto.Id,
-				Name = orderDto.Name,
+				CustomerId = orderDto.CustomerId,
 				ProductItems = orderDto.ProductItems,
 				Completed = orderDto.Completed
 			};
@@ -26,7 +26,7 @@ namespace TeamTwo.WebShop.OrderService.Domain.Mappers
 			{
 				Id = order.Id,
 				Completed = order.Completed,
-				Name = order.Name,
+				CustomerId = order.CustomerId,
 				ProductItems = order.ProductItems
 			};
 		}

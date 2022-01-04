@@ -10,25 +10,25 @@ namespace TeamTwo.WebShop.CustomerService.Infrastructure.Mappers
 {
 	public class EfMapper : IEfMapper
 	{
-		public CustomerEf Create(Customer order)
+		public CustomerEf Create(Customer customer)
 		{
 			return new CustomerEf()
 			{
-				Id = order.Id,
-				FirstName = order.FirstName,
-				LastName = order.LastName,
-				Age = order.Age
+				Id = customer.Id,
+				FirstName = customer.FirstName,
+				LastName = customer.LastName,
+				Age = customer.Age
 			};
 		}
 
-		public Customer Map(CustomerEf order)
+		public Customer Map(CustomerEf customerEf)
 		{
 			return new Customer()
 			{
-				Id = order.Id,
-				FirstName = order.FirstName,
-				LastName = order.LastName,
-				Age = order.Age
+				Id = customerEf.Id,
+				FirstName = customerEf.FirstName,
+				LastName = customerEf.LastName,
+				Age = customerEf.Age
 			};
 		}
 	}

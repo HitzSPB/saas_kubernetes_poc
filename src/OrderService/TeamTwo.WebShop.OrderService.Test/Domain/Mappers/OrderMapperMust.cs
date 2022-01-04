@@ -14,14 +14,14 @@ namespace TeamTwo.WebShop.OrderService.Test.Domain.Mappers
 		public void BeAbleToMapToDto()
 		{
 			IOrderMapper sut = new OrderMapper();
-			var actual = sut.Map(new Order(10, "test", new List<ProductItem>(), true));
+			var actual = sut.Map(new Order(10, 2, new List<ProductItem>(), true));
 			Assert.NotNull(actual);
 		}
 		[Fact]
 		public void BeAbleToMapToDomainObject()
 		{
 			IOrderMapper sut = new OrderMapper();
-			var actual = sut.Create(new OrderDto() { Completed = true, Id = 10, Name = "test", ProductItems = new List<ProductItem>()});
+			var actual = sut.Create(new OrderDto() { Completed = true, Id = 10, CustomerId = 2, ProductItems = new List<ProductItem>()});
 			Assert.NotNull(actual);
 		}
 	}

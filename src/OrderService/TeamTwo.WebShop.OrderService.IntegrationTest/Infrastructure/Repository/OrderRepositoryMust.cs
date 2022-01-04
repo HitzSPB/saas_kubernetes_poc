@@ -38,31 +38,31 @@ namespace TeamTwo.WebShop.OrderService.IntegrationTest.Infrastructure.Repository
 		public async Task BeAbleTogetOrderById()
 		{
 			// Arrange
-			await sut.CreateOrderAsync(new Order(1, "test1", new List<ProductItem>(), true));
-			await sut.CreateOrderAsync(new Order(2, "test2", new List<ProductItem>(), true));
-			await sut.CreateOrderAsync(new Order(3, "test3", new List<ProductItem>(), true));
+			await sut.CreateOrderAsync(new Order(1, 1, new List<ProductItem>(), true));
+			await sut.CreateOrderAsync(new Order(2, 2, new List<ProductItem>(), true));
+			await sut.CreateOrderAsync(new Order(3, 3, new List<ProductItem>(), true));
 
 			// Act
 			var actual = await sut.GetOrderAsync(2);
 
-			Assert.Equal("test2", actual.Name);
+			Assert.Equal(2, actual.CustomerId);
 		}
 		[Fact]
 		public async Task BeAbleToCreateOrder()
 		{
 			// Arrange & Act
-			var actual = await sut.CreateOrderAsync(new Order(1, "test1", new List<ProductItem>(), true));
+			var actual = await sut.CreateOrderAsync(new Order(1, 1, new List<ProductItem>(), true));
 
-			Assert.Equal("test1", actual.Name);
+			Assert.Equal(1, actual.CustomerId);
 		}
 		[Fact]
 		public async Task BeAbleToUpdateOrderById()
 		{
 			// Arrange
-			var targetOrder = new Order(2, "test2", new List<ProductItem>(), true);
-			await sut.CreateOrderAsync(new Order(1, "test1", new List<ProductItem>(), true));
+			var targetOrder = new Order(2, 2, new List<ProductItem>(), true);
+			await sut.CreateOrderAsync(new Order(1, 1, new List<ProductItem>(), true));
 			await sut.CreateOrderAsync(targetOrder);
-			await sut.CreateOrderAsync(new Order(3, "test3", new List<ProductItem>(), true));
+			await sut.CreateOrderAsync(new Order(3, 3, new List<ProductItem>(), true));
 
 			// Act
 			var newOrder = targetOrder;
@@ -76,9 +76,9 @@ namespace TeamTwo.WebShop.OrderService.IntegrationTest.Infrastructure.Repository
 		public async Task BeAbleToDeleteOrder()
 		{
 			// Arrange
-			await sut.CreateOrderAsync(new Order(1, "test1", new List<ProductItem>(), true));
-			await sut.CreateOrderAsync(new Order(2, "test2", new List<ProductItem>(), true));
-			await sut.CreateOrderAsync(new Order(3, "test3", new List<ProductItem>(), true));
+			await sut.CreateOrderAsync(new Order(1, 1, new List<ProductItem>(), true));
+			await sut.CreateOrderAsync(new Order(2, 2, new List<ProductItem>(), true));
+			await sut.CreateOrderAsync(new Order(3, 3, new List<ProductItem>(), true));
 
 			// Act 
 			await sut.DeleteOrderAsync(2);

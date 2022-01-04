@@ -12,16 +12,16 @@ namespace TeamTwo.WebShop.OrderService.Domain.Models
 		{
 
 		}
-		public Order(int id, string name, List<ProductItem> productItems, bool completed)
+		public Order(int id, int customerId, List<ProductItem> productItems, bool completed)
 		{
 			Id = id;
-			Name = name;
+			CustomerId = customerId;
 			ProductItems = productItems;
 			Completed = completed;
 		}
 
 		public int Id { get; set; }
-		public string Name { get; set; }
+		public int CustomerId { get; set; }
 		public List<ProductItem> ProductItems { get; set; }
 		public bool Completed { get; set; }
 	}

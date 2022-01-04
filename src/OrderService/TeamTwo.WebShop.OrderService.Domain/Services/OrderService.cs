@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeamTwo.WebShop.OrderService.Domain.External;
 using TeamTwo.WebShop.OrderService.Domain.Mappers;
 using TeamTwo.WebShop.OrderService.Domain.Models;
 using TeamTwo.WebShop.OrderService.Domain.Repository;
@@ -13,11 +14,13 @@ namespace TeamTwo.WebShop.OrderService.Domain.Services
 	{
 		private readonly IOrderRepository _orderRepository;
 		private readonly IOrderMapper _orderMapper;
+		private readonly ICustomerServiceCall _customerServiceCall;
 
-		public OrderService(IOrderRepository orderRepository, IOrderMapper orderMapper)
+		public OrderService(IOrderRepository orderRepository, IOrderMapper orderMapper, ICustomerServiceCall customerServiceCall)
 		{
 			_orderRepository = orderRepository;
 			_orderMapper = orderMapper;
+			_customerServiceCall = customerServiceCall;
 		}
 
 		public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync()
@@ -38,6 +41,10 @@ namespace TeamTwo.WebShop.OrderService.Domain.Services
 
 		public async Task<OrderDto> CreateOrderAsync(OrderDto orderDto)
 		{
+			var customer = await _customerServiceCall.GetCustomerByIdAsync(orderDto.CustomerId);
+
+			if (string.IsNullOrWhiteSpace(customer.FirstName))
+				throw new ArgumentNullException("Customer doesn't exist");
 			var order = await _orderRepository.CreateOrderAsync(_orderMapper.Create(orderDto));
 			return _orderMapper.Map(order);
 		}

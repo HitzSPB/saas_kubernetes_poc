@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TeamTwo.WebShop.OrderService.Domain.Models
 {
-	public class OrderDto
+	public class Customer
 	{
 		public int Id { get; set; }
-		public int CustomerId { get; set; }
-		public List<ProductItem> ProductItems { get; set; }
-		public bool Completed { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public int Age { get; set; }
 	}
 }

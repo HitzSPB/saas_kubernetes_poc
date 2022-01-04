@@ -11,6 +11,6 @@ foreach($item in $data)
   }
 "@
 Write-Host $JSON
-$response = Invoke-RestMethod -Uri "https://localhost:44350/api/Customer" -Method Post -Body $JSON -ContentType "application/json"
+$response = Invoke-RestMethod -Uri "https://localhost:54918/api/Customer" -Method Post -Body $JSON -ContentType "application/json"
 Write-Host $response
 }

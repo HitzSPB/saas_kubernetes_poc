@@ -20,7 +20,7 @@ namespace TeamTwo.WebShop.OrderService.Infrastructure.Mappers
 			return new OrderEf()
 			{
 				Id = order.Id,
-				Name = order.Name,
+				CustomerId = order.CustomerId,
 				ProductItems = list,
 				Completed = order.Completed
 			};
@@ -37,7 +37,7 @@ namespace TeamTwo.WebShop.OrderService.Infrastructure.Mappers
 			{
 				Id = order.Id,
 				Completed = order.Completed,
-				Name = order.Name,
+				CustomerId = order.CustomerId,
 				ProductItems = list
 			};
 		}
