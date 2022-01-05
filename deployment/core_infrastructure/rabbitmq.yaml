@@ -48,6 +48,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: rabbitmq-cm-conf
+  namespace: orderservice-poc
 data:
   rabbitmq.conf: |
     loopback_users.guest = false
@@ -65,9 +66,34 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: rabbitmq-cm-enabled-plugins
+  namespace: orderservice-poc
 data:
   enabled_plugins: |
     [rabbitmq_management].
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rabbitmq-service-account
+  namespace: orderservice-poc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit
+  namespace: orderservice-poc
+spec:
+  type: LoadBalancer
+  selector:
+    app: rabbitmq
+  ports:
+  - port: 5672
+    name: data
+    targetPort: 5672
+  - port: 15672
+    name: management
+    targetPort: 15672
+    nodePort: 31672
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -76,6 +102,7 @@ metadata:
   labels:
     app: rabbitmq
     tier: rabbitmq
+  namespace: orderservice-poc
 spec:
   serviceName: rabbitmq
   replicas: 1
@@ -84,6 +111,7 @@ spec:
       app: rabbitmq
   template:
     metadata:
+      namespace: orderservice-poc
       labels:
         app: rabbitmq
     spec:
@@ -123,20 +151,3 @@ spec:
         - name: enabled-plugins
           configMap:
             name: rabbitmq-cm-enabled-plugins
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: rabbit
-spec:
-  type: LoadBalancer
-  selector:
-    app: rabbitmq
-  ports:
-  - port: 5672
-    name: data
-    targetPort: 5672
-  - port: 15672
-    name: management
-    targetPort: 15672
-    nodePort: 31672
