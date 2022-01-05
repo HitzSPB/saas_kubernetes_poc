@@ -8,11 +8,11 @@ services:
         ACCEPT_EULA: "Y"
     ports: 
       - "1434:1433"
-  teamtwo.webshop.orderservice.api:
-    image: ${DOCKER_REGISTRY-}teamtwowebshoporderserviceapi
+  Unik.webshop.orderservice.api:
+    image: ${DOCKER_REGISTRY-}Unikwebshoporderserviceapi
     build:
       context: .
-      dockerfile: TeamTwo.WebShop.OrderService.API/Dockerfile
+      dockerfile: Unik.WebShop.OrderService.API/Dockerfile
     environment:
       Server: SqlServerCustomer
       Port: 1434

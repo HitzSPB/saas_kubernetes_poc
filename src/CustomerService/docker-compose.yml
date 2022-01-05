@@ -8,11 +8,11 @@ services:
         ACCEPT_EULA: "Y"
     ports: 
       - "1433:1433"
-  teamtwo.webshop.customerservice.api:
-    image: ${DOCKER_REGISTRY-}teamtwowebshopcustomerserviceapi
+  Unik.webshop.customerservice.api:
+    image: ${DOCKER_REGISTRY-}Unikwebshopcustomerserviceapi
     build:
       context: .
-      dockerfile: TeamTwo.WebShop.CustomerService.Api/Dockerfile
+      dockerfile: Unik.WebShop.CustomerService.Api/Dockerfile
     environment:
       Server: SqlServer
       Port: 1433

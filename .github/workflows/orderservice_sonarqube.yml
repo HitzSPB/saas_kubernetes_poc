@@ -54,6 +54,6 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"HitzSPB_saas_kubernetes_poc" /o:"sonarcloud-hitzspb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build ./src/TeamTwo.WebShop.OrderService.sln --configuration Release
-          dotnet test ./src/TeamTwo.WebShop.OrderService.sln --no-restore --verbosity normal --collect:"XPlat Code Coverage" --results-directory TestResults/ --settings coverlet.runsettings --logger "trx;LogFileName=unittests.trx" --no-build -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet build ./src/Unik.WebShop.OrderService.sln --configuration Release
+          dotnet test ./src/Unik.WebShop.OrderService.sln --no-restore --verbosity normal --collect:"XPlat Code Coverage" --results-directory TestResults/ --settings coverlet.runsettings --logger "trx;LogFileName=unittests.trx" --no-build -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

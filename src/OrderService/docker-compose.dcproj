@@ -6,7 +6,7 @@
     <ProjectGuid>3e62dc74-a816-4117-b231-0f6d9f7a081c</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>teamtwo.webshop.orderservice.api</DockerServiceName>
+    <DockerServiceName>Unik.webshop.orderservice.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
