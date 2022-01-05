@@ -131,6 +131,8 @@ spec:
           timeoutSeconds: 10
         imagePullPolicy: Always
         volumeMounts:
+        - name: rabbitdata
+          mountPath: /var/lib/rabbitmq/mnesia     
         - name: rabbitmq-conf
           mountPath: /etc/rabbitmq/rabbitmq.conf
           subPath: rabbitmq.conf
@@ -151,3 +153,6 @@ spec:
         - name: enabled-plugins
           configMap:
             name: rabbitmq-cm-enabled-plugins
+        - name: rabbitdata
+          persistentVolumeClaim:
+            claimName: rabbitmq-data
