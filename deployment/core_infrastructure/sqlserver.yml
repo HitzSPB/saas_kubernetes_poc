@@ -12,12 +12,12 @@ parameters:
   blocksize: "33554432"
   container: customsqlclusterstorage
   dynamic: "true"
-  group: clustergroup-unikdevcluster # same as the default storageclass
-  hostname: AKSTESTHOST.uniktest.local # same as the default storageclass
+  group: clustergroup-unikdevcluster
+  hostname: AKSTESTHOST.uniktest.local
   logicalsectorsize: "4096"
   physicalsectorsize: "4096"
   port: "55000"
-  fsType: ext4 # refer to the note above to determine when to include this parameter
+  fsType: ext4
 provisioner: disk.csi.akshci.com
 allowVolumeExpansion: true
 reclaimPolicy: Delete

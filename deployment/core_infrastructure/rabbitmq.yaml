@@ -10,7 +10,7 @@ metadata:
   name: "rabbitmq-storage"
 parameters:
   blocksize: "33554432"
-  container: rabbitmqorderpocstorage
+  container: rabbitdataclusterstorage
   dynamic: "true"
   group: clustergroup-unikdevcluster # same as the default storageclass
   hostname: AKSTESTHOST.uniktest.local # same as the default storageclass

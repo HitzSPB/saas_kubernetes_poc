@@ -10,14 +10,14 @@ metadata:
   name: "seq-provisioner"
 parameters:
   blocksize: "33554432"
-  container: seqclusterstorage
+  container: rabbitlogclusterstorage # SAN misunderstood the logging was for general and not rabbitmq. will be fixed later
   dynamic: "true"
-  group: clustergroup-unikdevcluster # same as the default storageclass
-  hostname: AKSTESTHOST.uniktest.local # same as the default storageclass
+  group: clustergroup-unikdevcluster
+  hostname: AKSTESTHOST.uniktest.local
   logicalsectorsize: "4096"
   physicalsectorsize: "4096"
   port: "55000"
-  fsType: ext4 # refer to the note above to determine when to include this parameter
+  fsType: ext4
 provisioner: disk.csi.akshci.com
 allowVolumeExpansion: true
 reclaimPolicy: Delete
@@ -58,24 +58,43 @@ spec:
     metadata:
       labels:
         app: seq
-  spec:
-    replicas: 1
-    containers:
-    - name: seq
-      image: datalust/seq:latest
-      ports:
-      - containerPort: 80
-      - containerPort: 5341
-      env:
-      - name: ACCEPT_EULA
-        value: "Y"
-      volumeMounts:
-      - name: volume
-        mountPath: "/data"
-    volumes:
-      - name: seq-storage
-        persistentVolumeClaim:
-          claimName: seq-data
+    spec:
+      terminationGracePeriodSeconds: 30
+      # hostname: seqinst
+      securityContext:
+        fsGroup: 10001
+      containers:
+      - name: seq
+        image: datalust/seq:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 1256Mi   
+        volumeMounts:
+         - name: seq-storage
+           mountPath: "/data"
+        ports:
+        - containerPort: 80
+        - containerPort: 5341   
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: MSSQL_PID
+          value: "Developer"
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mssql-env
+              key: MSSQL_SA_PASSWORD
+      volumes:
+        - name: seq-storage
+          persistentVolumeClaim:
+            claimName: seq-data
 ---
 apiVersion: v1
 kind: Service
