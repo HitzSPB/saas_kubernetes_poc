@@ -6,9 +6,11 @@ using Unik.WebShop.OrderService.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Unik.WebShop.OrderService.Infrastructure.Mappers;
 using Unik.WebShop.OrderService.Domain.External;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
+
 
 // Add services to the container.
 builder.Services.AddScoped<IOrderMapper, OrderMapper>();
@@ -26,6 +28,9 @@ var password = configuration.GetValue("Password", "SuperSecretPasswordNoOneWilKn
 var customerServiceBasePath = configuration.GetValue("customerServiceBasepath", "SuperSecretPasswordNoOneWilKnow");
 builder.Services.AddDbContext<OrderContext>( options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID ={user};password={password}", x => x.MigrationsAssembly("Unik.WebShop.OrderService.Infrastructure")));
 
+// Logging
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console()
+.WriteTo.Seq(configuration.GetValue("SeqLogging", "http://localhost:5341/")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

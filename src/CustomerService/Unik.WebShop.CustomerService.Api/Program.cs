@@ -5,9 +5,14 @@ using Unik.WebShop.CustomerService.Domain.Services;
 using Unik.WebShop.CustomerService.Infrastructure.Context;
 using Unik.WebShop.CustomerService.Infrastructure.Mappers;
 using Unik.WebShop.CustomerService.Infrastructure.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
+
+// Logging
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console()
+.WriteTo.Seq(configuration.GetValue("SeqLogging", "http://localhost:5341/")));
 
 // Add services to the container.
 builder.Services.AddScoped<ICustomerMapper, CustomerMapper>();
