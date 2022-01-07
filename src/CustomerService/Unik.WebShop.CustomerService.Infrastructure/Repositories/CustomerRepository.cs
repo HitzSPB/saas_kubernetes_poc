@@ -33,7 +33,12 @@ namespace Unik.WebShop.CustomerService.Infrastructure.Repositories
 
 		public async Task<Customer> GetCustomerAsync(int id)
 		{
-			return _efMapper.Map(await _customerContext.Customers.FirstOrDefaultAsync(x => x.Id == id));
+			var customerEf = await _customerContext.Customers.FirstOrDefaultAsync(x => x.Id == id);
+			if(customerEf != null)
+			{
+				return _efMapper.Map(customerEf);
+			}
+			return null;
 		}
 		public async Task<Customer> CreateCustomerAsync(Customer customer)
 		{

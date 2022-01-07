@@ -30,9 +30,12 @@ namespace Unik.WebShop.CustomerService.Domain.Services
 			}
 			return customersDto;
 		}
-		public async Task<CustomerDto> GetCustomerByIdAsync(int id)
+		public async Task<CustomerDto?> GetCustomerByIdAsync(int id)
 		{
 			var customer = await _customerRepository.GetCustomerAsync(id);
+
+			if (customer == null)
+				return null;
 			return _customerMapper.Map(customer);
 		}
 

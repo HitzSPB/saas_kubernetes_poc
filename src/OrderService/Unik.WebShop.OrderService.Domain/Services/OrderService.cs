@@ -43,8 +43,8 @@ namespace Unik.WebShop.OrderService.Domain.Services
 		{
 			var customer = await _customerServiceCall.GetCustomerByIdAsync(orderDto.CustomerId);
 
-			if (string.IsNullOrWhiteSpace(customer.FirstName))
-				throw new ArgumentNullException("Customer doesn't exist");
+			if (customer == null)
+				return null;
 			var order = await _orderRepository.CreateOrderAsync(_orderMapper.Create(orderDto));
 			return _orderMapper.Map(order);
 		}

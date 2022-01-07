@@ -24,8 +24,8 @@ var port = configuration.GetValue("Port", "1433");
 var database = configuration.GetValue("db", "customerservice");
 var user = configuration.GetValue("User", "sa");
 var password = configuration.GetValue("Password", "SuperSecretPasswordNoOneWilKnow");
-builder.Services.AddDbContext<CustomerContext>(options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID ={user};password={password}", x => x.MigrationsAssembly("Unik.WebShop.CustomerService.Infrastructure")));
-//builder.Services.AddDbContext<CustomerContext>(options => options.UseSqlServer($"Server={server};Initial Catalog={database};User ID ={user};password={password}", x => x.MigrationsAssembly("Unik.WebShop.CustomerService.Infrastructure")));
+//builder.Services.AddDbContext<CustomerContext>(options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID ={user};password={password}", x => x.MigrationsAssembly("Unik.WebShop.CustomerService.Infrastructure")));
+builder.Services.AddDbContext<CustomerContext>(options => options.UseSqlServer($"Server={server};Initial Catalog={database};User ID ={user};password={password}", x => x.MigrationsAssembly("Unik.WebShop.CustomerService.Infrastructure")));
 
 
 builder.Services.AddControllers();

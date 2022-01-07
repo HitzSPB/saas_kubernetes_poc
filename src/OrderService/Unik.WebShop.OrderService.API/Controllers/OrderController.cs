@@ -32,10 +32,13 @@ namespace Unik.WebShop.OrderService.API.Controllers
 		}
 
 		[HttpPost(Name = "PostOrder")]
-		public async Task<OrderDto> Post([FromBody] OrderDto orderDto)
+		public async Task<IActionResult> Post([FromBody] OrderDto orderDto)
 		{
 			_logger.LogInformation("Order Api Controller have been called with the post route");
-			return await _orderService.CreateOrderAsync(orderDto);
+			var customerDto = await _orderService.CreateOrderAsync(orderDto);
+			if (customerDto == null)
+				return new BadRequestResult();
+			return new OkObjectResult(customerDto);
 		}
 
 		[HttpPatch(template: "{id}", Name = "UpdateOrder")]

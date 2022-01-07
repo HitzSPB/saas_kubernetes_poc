@@ -25,8 +25,8 @@ var port = configuration.GetValue("Port", "1434");
 var database = configuration.GetValue("db","orderservice");
 var user = configuration.GetValue("User", "sa");
 var password = configuration.GetValue("Password", "SuperSecretPasswordNoOneWilKnow");
-var customerServiceBasePath = configuration.GetValue("customerServiceBasepath", "SuperSecretPasswordNoOneWilKnow");
-builder.Services.AddDbContext<OrderContext>( options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID ={user};password={password}", x => x.MigrationsAssembly("Unik.WebShop.OrderService.Infrastructure")));
+var customerServiceBasePath = configuration.GetValue("customerServiceBasepath", "https://localhost:7153/");
+builder.Services.AddDbContext<OrderContext>( options => options.UseSqlServer($"Server={server};Initial Catalog={database};User ID ={user};password={password}", x => x.MigrationsAssembly("Unik.WebShop.OrderService.Infrastructure")));
 
 // Logging
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console()

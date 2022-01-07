@@ -28,7 +28,8 @@ namespace Unik.WebShop.CustomerService.Api.Controllers
 		public async Task<CustomerDto> Get(int id)
 		{
 			_logger.LogInformation("Customer Api Controller have been called in the Get specific id");
-			return await _customerService.GetCustomerByIdAsync(id);
+			var customerDto = await _customerService.GetCustomerByIdAsync(id);
+			return customerDto;
 		}
 
 		[HttpPost(Name = "PostCustomer")]
