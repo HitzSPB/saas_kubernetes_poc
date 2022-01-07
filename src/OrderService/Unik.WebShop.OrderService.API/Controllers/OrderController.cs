@@ -42,10 +42,13 @@ namespace Unik.WebShop.OrderService.API.Controllers
 		}
 
 		[HttpPatch(template: "{id}", Name = "UpdateOrder")]
-		public async Task<OrderDto> Patch(int id, [FromBody] OrderDto orderDto)
+		public async Task<IActionResult> Patch(int id, [FromBody] OrderDto orderDto)
 		{
 			_logger.LogInformation("Order Api Controller have been called with the update route with id {id}", id);
-			return await _orderService.UpdateOrderAsync(id, orderDto);
+			var customerDto = _orderService.UpdateOrderAsync(id, orderDto);
+			if (customerDto == null)
+				return new BadRequestResult();
+			return new OkObjectResult(customerDto);
 		}
 
 		[HttpDelete(template: "{id}", Name = "DeleteOrder")]
