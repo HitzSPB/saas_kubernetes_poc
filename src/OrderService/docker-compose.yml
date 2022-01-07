@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  SqlServerCustomer:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+        SA_PASSWORD: "Your_password123"
+        ACCEPT_EULA: "Y"
+    ports: 
+      - "1434:1433"
+  unik.webshop.orderservice.api:
+    image: ${DOCKER_REGISTRY-}Unikwebshoporderserviceapi
+    build:
+      context: .
+      dockerfile: Unik.WebShop.OrderService.API/Dockerfile
+    environment:
+      Server: SqlServerCustomer
+      Port: 1434
+      db: orderservice
+      User: sa
+      Password: "Your_password123"
+    ports: 
+      - "8051:80"
+    depends_on:
+      - SqlServerCustomer  

@@ -1,0 +1,158 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: orderservice-poc
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  namespace: orderservice-poc
+  name: "rabbitmq-storage"
+parameters:
+  blocksize: "33554432"
+  container: rabbitdataclusterstorage
+  dynamic: "true"
+  group: clustergroup-unikdevcluster # same as the default storageclass
+  hostname: AKSTESTHOST.uniktest.local # same as the default storageclass
+  logicalsectorsize: "4096"
+  physicalsectorsize: "4096"
+  port: "55000"
+  fsType: ext4 # refer to the note above to determine when to include this parameter
+provisioner: disk.csi.akshci.com
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+volumeBindingMode: Immediate      
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: orderservice-poc
+  name: rabbitmq-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: rabbitmq-storage
+  resources:
+    requests:
+      storage: 8Gi
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   namespace: orderservice-poc
+#   name: mssql-env
+# stringData:
+#   MSSQL_SA_PASSWORD: "ThisIsMyTopSecretPa$$Wrod"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-cm-conf
+  namespace: orderservice-poc
+data:
+  rabbitmq.conf: |
+    loopback_users.guest = false
+    default_vhost = /
+    default_user = guest
+    default_pass = guest
+    default_permissions.configure = .*
+    default_permissions.read = .*
+    default_permissions.write = .*
+    default_user_tags.administrator = true
+    default_user_tags.management = true
+    management.tcp.port = 15672
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-cm-enabled-plugins
+  namespace: orderservice-poc
+data:
+  enabled_plugins: |
+    [rabbitmq_management].
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rabbitmq-service-account
+  namespace: orderservice-poc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit
+  namespace: orderservice-poc
+spec:
+  type: LoadBalancer
+  selector:
+    app: rabbitmq
+  ports:
+  - port: 5672
+    name: data
+    targetPort: 5672
+  - port: 15672
+    name: management
+    targetPort: 15672
+    nodePort: 31672
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+    tier: rabbitmq
+  namespace: orderservice-poc
+spec:
+  serviceName: rabbitmq
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      namespace: orderservice-poc
+      labels:
+        app: rabbitmq
+    spec:
+      serviceAccountName: rabbitmq-service-account
+      securityContext:
+        fsGroup: 999
+        runAsUser: 999
+        runAsGroup: 999      
+      containers:
+      - name: rabbit
+        image: rabbitmq:3-management
+        readinessProbe:
+          exec:
+            command: ["rabbitmq-diagnostics", "ping"]
+          initialDelaySeconds: 20
+          periodSeconds: 60
+          timeoutSeconds: 10
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: rabbitdata
+          mountPath: /var/lib/rabbitmq/mnesia     
+        - name: rabbitmq-conf
+          mountPath: /etc/rabbitmq/rabbitmq.conf
+          subPath: rabbitmq.conf
+          readOnly: true
+        - name: enabled-plugins
+          mountPath: /etc/rabbitmq/enabled_plugins
+          subPath: enabled_plugins
+          readOnly: true
+        ports:
+        - containerPort: 5672
+          protocol: TCP
+        - containerPort: 15672
+          protocol: TCP
+      volumes:
+        - name: rabbitmq-conf
+          configMap: 
+            name: rabbitmq-cm-conf
+        - name: enabled-plugins
+          configMap:
+            name: rabbitmq-cm-enabled-plugins
+        - name: rabbitdata
+          persistentVolumeClaim:
+            claimName: rabbitmq-data

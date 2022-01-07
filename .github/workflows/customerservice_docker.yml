@@ -1,4 +1,4 @@
-name: orderservice_docker
+name: customerservice_docker
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./src/OrderService
-          file: ./src/OrderService/Unik.WebShop.OrderService.API/Dockerfile
+          context: ./src/CustomerService
+          file: ./src/CustomerService/Unik.WebShop.CustomerService.Api/Dockerfile
           push: true
-          tags: hitzspb/orderservice:latest
+          tags: hitzspb/customerservice:latest

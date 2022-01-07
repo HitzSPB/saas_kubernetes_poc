@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: orderservice-poc
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  namespace: orderservice-poc
+  name: "seq-provisioner"
+parameters:
+  blocksize: "33554432"
+  container: rabbitlogclusterstorage # SAN misunderstood the logging was for general and not rabbitmq. will be fixed later
+  dynamic: "true"
+  group: clustergroup-unikdevcluster
+  hostname: AKSTESTHOST.uniktest.local
+  logicalsectorsize: "4096"
+  physicalsectorsize: "4096"
+  port: "55000"
+  fsType: ext4
+provisioner: disk.csi.akshci.com
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+volumeBindingMode: Immediate      
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: orderservice-poc
+  name: seq-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: seq-provisioner
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: orderservice-poc
+  name: mssql-env
+stringData:
+  MSSQL_SA_PASSWORD: "ThisIsMyTopSecretPa$$Wrod"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seq
+  namespace: orderservice-poc
+spec:
+  replicas: 1
+  selector:
+     matchLabels:
+       app: seq
+  template:
+    metadata:
+      labels:
+        app: seq
+    spec:
+      terminationGracePeriodSeconds: 30
+      # hostname: seqinst
+      securityContext:
+        fsGroup: 10001
+      containers:
+      - name: seq
+        image: datalust/seq:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 1256Mi   
+        volumeMounts:
+         - name: seq-storage
+           mountPath: "/data"
+        ports:
+        - containerPort: 80
+        - containerPort: 5341   
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: MSSQL_PID
+          value: "Developer"
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mssql-env
+              key: MSSQL_SA_PASSWORD
+      volumes:
+        - name: seq-storage
+          persistentVolumeClaim:
+            claimName: seq-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seq
+  namespace: orderservice-poc
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: seq    
